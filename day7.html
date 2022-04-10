@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background: url(https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm309-aew-013_1_1.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=2724bd9481a065ee24e7e7eaaabf1c55) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+    }
+    #movies:hover{
+    /* border: 1px solid gray; */
+    width: 30.5%;
+    margin-left: 35%;
+    background-color: rgb(63, 62, 62);
+    border-radius: 10px;
+    height: 200px;
+    overflow:auto;
+    border-top: none;     
+    }
+    #movie{
+    margin-left: 35%;
+    width: 30%;
+    height: 30px;
+    font-size: 20px;
+    }
+    
+    img{
+        width: 70%;
+    }
+
+    #already{
+    display: grid;
+    grid-template-columns: repeat(4,25%);
+    margin-left: 8%;
+    margin-top: 5%;
+    grid-gap: 5px;
+    color: rgb(49, 49, 27);
+    font-family: monospace;
+    }
+ 
+    #single_data{
+        margin-left: 100%;
+    }
+    #margin{
+        margin-left: 450px;
+        font-size: 20px;
+        width: 100%;
+        color: turquoise;
+    }
+    #img-margin{
+        margin-left: 450px;
+       
+    }
+    #til-margin{
+        margin-left: 450px;
+        font-size: 30;
+        width: 100%;
+        color: yellow;
+    }
+    h3:hover{
+        color: darkorange;
+        background-color: rgb(44, 36, 44);
+        width: 70%;
+      height: 30px;
+      padding: 20px;
+        
+    }
+    #m_title{
+        width: 70%;
+        color: rgb(134, 231, 22);
+        font-size: 25px;
+    }
+  
+    #ins-tit{
+       font-size: 22px;
+       color: rgb(248, 248, 248);
+    }
+    #ref{
+        margin-left: 10%;
+        font-size: 30px;
+        color: turquoise;
+    }
+  #pop{
+    margin-left: 10%;
+    color: tomato;
+    font-weight:bolder; 
+  }
+  input{
+      font-size: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bolder;
+      color: forestgreen;
+      
+  }
+</style>
+<body>
+    <input type="text"  oninput="debounce(main,1000)"  id="movie" placeholder="Search your movie..."/>
+    <div id="movies"></div>
+    
+    <div id="data"></div>
+    <a id="ref" href="movies_app_2.html">Click to Refresh</a>
+    <h1 id="pop">Popular Movies</h1>
+    <div id="already"></div>
+</body>
+</html>
+<script>
+//https://api.themoviedb.org/3/search/multi?api_key=653c0fa8e5903bd38ef379e4a06d5078&language=en-US&query=avengers
+//https://api.themoviedb.org/3/search/movie?api_key=653c0fa8e5903bd38ef379e4a06d5078&query=avengers
+
+let movie_div = document.getElementById("movies")
+var div_data = document.getElementById("data")
+
+var already = document.getElementById("already")
+
+var timerId;
+async function searchMovies(movie_name){
+
+    // try{
+        let res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=653c0fa8e5903bd38ef379e4a06d5078&query=${movie_name}`)
+
+     var data = await res.json()
+     return data
+//     }
+//     catch(e){
+//   console.log(e)
+//     }
+
+}
+
+
+function appendMovie(movies){
+
+    movie_div.innerHTML = null
+
+       if(movies===undefined){
+           return false
+       }
+
+
+       movies.forEach(function(movie){
+
+        var div1 = document.createElement("div")
+           let title = document.createElement("h3")
+           title.innerText = movie.title
+ 
+        //    var image = document.createElement("img")
+        //    image.src = `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+
+           div1.append(title)
+          
+           movie_div.append(div1)
+
+        //    image.setAttribute("id","ins-img")
+           title.setAttribute("id", "ins-tit")
+            div1.setAttribute("id","f-left")
+
+
+
+        title.onclick = async function(){
+        div_data.innerHTML = null
+         movie_div.innerHTML = null
+         already.innerHTML = null
+            
+               let res = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=8ed28af12e1ddbd82b32d292adc6eadc&language=en-US`)
+               var data = await res.json()
+               console.log(data)
+
+               var div = document.createElement("div")
+
+               var image = document.createElement("img")
+               image.src =  `https://image.tmdb.org/t/p/original/${data.poster_path} `
+
+            var title = document.createElement("h1")
+            title.innerText = data.title
+
+            var runtime = document.createElement("p")
+            runtime.innerText = "Runtime:"+data.runtime
+
+            var id = document.createElement("p")
+            id.innerText = "Id:"+data.imdb_id
+
+            var ratings = document.createElement("p")
+            ratings.innerText = "Rating:"+data.vote_average
+
+            var status = document.createElement("p")
+            status.innerText = "Status:"+data.status
+
+            var rel_data = document.createElement("p")
+            rel_data.innerText = "Release:"+data.release_date
+
+            var budge  = document.createElement("p")
+            budge.innerText = "Cost:"+data.budget
+
+               div.append(image,title,runtime,id,ratings,status,rel_data,budge)
+
+              already.append(div)
+             
+              image.setAttribute("id","img-margin")
+              title.setAttribute("id","til-margin")
+              runtime.setAttribute("id","margin")
+              id.setAttribute("id","margin")
+              ratings.setAttribute("id","margin")
+              status.setAttribute("id","margin")
+              rel_data.setAttribute("id","margin")
+              budge.setAttribute("id","margin")
+              
+            
+        }
+
+
+async function searchMovies(movie_name){
+try{
+    let res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=653c0fa8e5903bd38ef379e4a06d5078&query=${movie_name}`)
+
+ var data = await res.json()
+console.log(data)
+}
+catch(e){
+console.log(e)
+}
+
+}
+       })
+
+}
+
+
+
+
+
+
+async function main(){
+    let name = document.getElementById("movie").value
+    
+    if(name.length<3){
+    return false
+}
+
+
+let res = await searchMovies(name)
+
+let movie_data =  res.results
+
+appendMovie(movie_data)
+console.log(res)
+
+
+}
+
+
+
+
+function debounce(func,delay){
+if(timerId){
+    clearTimeout(timerId)
+}
+
+ timerId = setTimeout(function(){
+    func()
+},delay)
+
+
+}
+
+
+
+
+
+//https://api.themoviedb.org/3/search/movie?api_key=653c0fa8e5903bd38ef379e4a06d5078&query=${movie_name}
+
+
+async function searchMovies1(){
+   already.innerHTML = null
+
+    let res1 = await fetch("https://api.themoviedb.org/3/movie/popular?api_key=653c0fa8e5903bd38ef379e4a06d5078&language=en-US&page=1")
+
+ var data1 = await res1.json()
+//  console.log('data:', data.results.title)
+searchPopular(data1.results)
+
+}
+
+
+function searchPopular(m){
+    m.forEach(function(movi){
+
+   var div_data = document.createElement("div")
+        var m_title = document.createElement("h2")
+        m_title.innerText = movi.title
+
+
+       
+
+var poster = document.createElement("img")
+poster.src = `https://image.tmdb.org/t/p/original/${movi.poster_path}`
+        
+//click on poster
+        poster.onclick = async function(){
+            already.innerHTML = null
+            let res = await fetch(`https://api.themoviedb.org/3/movie/${movi.id}?api_key=653c0fa8e5903bd38ef379e4a06d5078&language=en-US`)
+            var data = await res.json()
+            
+            console.log('data:', data)
+
+             var div = document.createElement("div")
+
+            var name = document.createElement("h1")
+            name.innerText = data.title
+
+            var rel_date = document.createElement("p")
+            rel_date.innerText = "Release-date:"+data.release_date
+      
+            var image = document.createElement("img")
+            image.src = `https://image.tmdb.org/t/p/original/${movi.poster_path}`
+
+            var runtime = document.createElement("p")
+            runtime.innerText = "Runtime:"+ data.runtime+"min"
+
+            var ratings = document.createElement("p")
+            ratings.innerText = "Rating:"+data.vote_average
+
+            var lang = document.createElement("p")
+            lang.innerText = "Language:"+data.original_language
+
+            var tag = document.createElement("p")
+            tag.innerText = data.tagline
+
+            div.append(image,name,rel_date,runtime,ratings,lang,tag)
+            
+            already.append(div)
+
+           image.setAttribute("id","img-margin")
+           name.setAttribute("id","til-margin")
+           rel_date.setAttribute("id","margin")
+           runtime.setAttribute("id","margin")
+           ratings.setAttribute("id","margin")
+           lang.setAttribute("id","margin")
+           tag.setAttribute("id","margin")
+
+             
+
+        }
+
+        div_data.append(poster,m_title)
+         already.append(div_data)
+         m_title.setAttribute("id", "m_title")
+    })
+}
+
+searchMovies1()
+
+
+</script>
