@@ -1,0 +1,13 @@
+body {
+    padding-top : 60px;
+    overflow-x: hidden;
+} 
+
+.navbar{
+    background-color: rgb(17, 34, 85);   
+    border: 0;
+}
+
+.carousel-inner img{
+    object-fit:cover;
+}
