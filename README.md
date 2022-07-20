@@ -2,7 +2,7 @@
 Online movie ticket reservation system is basically made for providing the customer’s, any where and anytime service for booking seat in movie hall and together. Information about the movies online. The user can easily be able to know about the movies released and then make choice.
 
 # Check the website live on
-https://apnashow.herokuapp.com/
+https://github.com/jatinsharma9871/movie.git
 
 # Images
 
@@ -51,7 +51,7 @@ https://apnashow.herokuapp.com/
 <img src="Screenshots/2020-11-30.png">
 
 <h2>BackEnd</h2>
-<h3><a href="https://github.com/18harsh/Movie-Reservation-System/blob/master/src/app.js">Node Js code</a></h3>
+<h3><a href="https://github.com/jatinsharma9871/movie/blob/master/src/app.js">Node Js code</a></h3>
 
 <h2>Database (MongoDB)</h2>
 
