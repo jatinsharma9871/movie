@@ -1,4 +1,4 @@
-// /Users/harsh/mongodb/bin/mongod.exe --dbpath=/Users/harsh/mongodb-data
+
 const express = require('express')
 require('./db/mongoose')
 const path = require('path')

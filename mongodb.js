@@ -1,4 +1,4 @@
-// /Users/harsh/mongodb/bin/mongod.exe --dbpath=/Users/harsh/mongodb-data
+
 
 // const mongodb = require("mongodb")
 // const MongoClient = mongodb.MongoClient
@@ -24,7 +24,7 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error,client) => 
         fname: 'Jatin',
         lname: 'Sharma',
         email: 'jatinsharma9871@gmail.com',
-        password: '1'
+        password: 'Jatin828@'
     }, (error,result) => {
             if (error) {
               return console.log('Unable to insert user')

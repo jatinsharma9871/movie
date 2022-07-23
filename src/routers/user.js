@@ -31,7 +31,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/signup', (req, res) => {
     if (!req.session.successlogin) {
-        req.session.loginpage = false
+        req.session.loginpage = true
         res.render('signup', {
             loginsuccess: req.session.successlogin,
             loginpage: req.session.loginpage,
